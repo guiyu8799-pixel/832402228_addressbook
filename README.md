@@ -10,6 +10,9 @@
 
 **代码规范**：<https://github.com/guiyu8799-pixel/832402228_addressbook/blob/main/codestyle.md>
 
+> 关于 Fork：课程未提供统一的模板仓库，因此按要求自建仓库，并采用「功能分支 + Pull Request + Release」的流程开发，
+> 保留完整的审查与合并记录（见 PR #1、#2）。
+
 ---
 
 ## 一、作业要求达成情况
