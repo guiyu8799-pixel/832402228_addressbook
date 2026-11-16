@@ -1,0 +1,86 @@
+### 健康检查
+GET http://localhost:8080/api/health
+
+### 全部联系人
+GET http://localhost:8080/api/contacts
+
+### 按关键词搜索（姓名、公司、职位、分组、任意联系方式）
+GET http://localhost:8080/api/contacts?q=13800138000
+
+### 只看收藏
+GET http://localhost:8080/api/contacts?bookmarked=true
+
+### 按分组过滤
+GET http://localhost:8080/api/contacts?group=同学
+
+### 统计信息（总数、收藏数、分组计数）
+GET http://localhost:8080/api/contacts/summary
+
+### 新建联系人（一个联系人多条联系方式）
+POST http://localhost:8080/api/contacts
+Content-Type: application/json
+
+{
+  "name": "苏晴",
+  "group": "同学",
+  "company": "福州大学",
+  "title": "计算机学院 本科生",
+  "notes": "同班同学",
+  "bookmarked": false,
+  "methods": [
+    { "type": "PHONE", "label": "手机", "value": "13800138001" },
+    { "type": "PHONE", "label": "宿舍", "value": "0591-22861234" },
+    { "type": "EMAIL", "label": "邮箱", "value": "suqing@example.com" },
+    { "type": "SOCIAL", "label": "微信", "value": "suqing_fzu" },
+    { "type": "ADDRESS", "label": "宿舍地址", "value": "福州市闽侯县学园路 2 号" }
+  ]
+}
+
+### 更新联系人
+PUT http://localhost:8080/api/contacts/1
+Content-Type: application/json
+
+{
+  "name": "苏晴",
+  "group": "同学",
+  "company": "福州大学",
+  "title": "计算机学院 本科生",
+  "notes": "同班同学，算法课队友",
+  "bookmarked": true,
+  "methods": [
+    { "type": "PHONE", "label": "手机", "value": "13800138001" },
+    { "type": "EMAIL", "label": "邮箱", "value": "suqing@example.com" }
+  ]
+}
+
+### 收藏 / 取消收藏
+PATCH http://localhost:8080/api/contacts/1/bookmark
+Content-Type: application/json
+
+{ "bookmarked": true }
+
+### 删除联系人
+DELETE http://localhost:8080/api/contacts/1
+
+### 导出 Excel
+GET http://localhost:8080/api/excel/export
+
+### 下载导入模板
+GET http://localhost:8080/api/excel/template
+
+### 导入 Excel（multipart，字段名 file）
+POST http://localhost:8080/api/excel/import
+Content-Type: multipart/form-data; boundary=Boundary
+
+--Boundary
+Content-Disposition: form-data; name="file"; filename="demo-contacts.xlsx"
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+< ./docs/demo-contacts.xlsx
+--Boundary--
+
+### 参数校验失败示例（姓名为空）
+POST http://localhost:8080/api/contacts
+Content-Type: application/json
+
+{ "name": "  " }
