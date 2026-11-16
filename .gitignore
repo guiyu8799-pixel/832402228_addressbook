@@ -23,7 +23,7 @@ Thumbs.db
 *.log
 
 # Screenshot / video working directories
-docs/.chrome-profile/
+docs/.chrome-profile*/
 docs/video-frames/
 docs/downloads/
 docs/screenshots/_excel.html
