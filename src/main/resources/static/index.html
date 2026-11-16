@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>通讯录 · Address Book</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="icon"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6fed'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='sans-serif'%3E讯%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <span class="brand-mark">讯</span>
+        <div class="brand-text">
+            <h1>通讯录</h1>
+            <p>收藏常用联系人 · 一人多条联系方式 · Excel 导入导出</p>
+        </div>
+    </div>
+
+    <div class="topbar-actions">
+        <div class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+            </svg>
+            <input id="searchInput" data-testid="search" type="search"
+                   placeholder="搜索姓名、电话、邮箱、分组…" autocomplete="off">
+        </div>
+        <button class="btn btn-ghost" id="templateBtn" data-testid="template">下载模板</button>
+        <button class="btn btn-ghost" id="importBtn" data-testid="import">导入 Excel</button>
+        <input id="importInput" data-testid="import-input" type="file" accept=".xlsx,.xls" hidden>
+        <button class="btn btn-ghost" id="exportBtn" data-testid="export">导出 Excel</button>
+        <button class="btn btn-primary" id="addBtn" data-testid="add">＋ 新增联系人</button>
+    </div>
+</header>
+
+<main class="layout">
+    <aside class="sidebar">
+        <nav class="nav">
+            <button class="nav-item is-active" data-filter="all" data-testid="filter-all">
+                <span class="nav-icon">👥</span>
+                <span>全部联系人</span>
+                <span class="count" id="countAll">0</span>
+            </button>
+            <button class="nav-item" data-filter="bookmarked" data-testid="filter-bookmarked">
+                <span class="nav-icon">★</span>
+                <span>收藏</span>
+                <span class="count" id="countBookmarked">0</span>
+            </button>
+        </nav>
+
+        <h2 class="sidebar-title">分组</h2>
+        <div class="group-list" id="groupList"></div>
+
+        <p class="sidebar-note">数据保存在后端 SQLite，刷新页面不会丢失；收藏的联系人始终排在最前面。</p>
+    </aside>
+
+    <section class="content">
+        <div class="toolbar">
+            <div class="toolbar-title">
+                <h2 id="listTitle">全部联系人</h2>
+                <p id="listSubtitle">共 0 位联系人</p>
+            </div>
+            <div class="view-switch" role="group" aria-label="视图切换">
+                <button class="view-btn is-active" id="viewCards" data-testid="view-cards">卡片</button>
+                <button class="view-btn" id="viewTable" data-testid="view-table">表格</button>
+            </div>
+        </div>
+
+        <div class="card-grid" id="cardGrid" data-testid="card-grid"></div>
+
+        <div class="table-wrap is-hidden" id="tableView">
+            <table class="contact-table">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>分组</th>
+                    <th>公司 / 职位</th>
+                    <th>联系方式</th>
+                    <th>收藏</th>
+                    <th class="col-actions">操作</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <div class="empty is-hidden" id="emptyState" data-testid="empty">
+            <div class="empty-icon">📇</div>
+            <h3 id="emptyTitle">还没有联系人</h3>
+            <p id="emptyText">点击右上角「新增联系人」，或先下载模板批量导入。</p>
+            <button class="btn btn-primary" id="emptyAddBtn">新增第一位联系人</button>
+        </div>
+    </section>
+</main>
+
+<!-- create / edit dialog -->
+<div class="modal is-hidden" id="modal" data-testid="modal" role="dialog" aria-modal="true"
+     aria-labelledby="modalTitle">
+    <div class="modal-card">
+        <header class="modal-head">
+            <div>
+                <h2 id="modalTitle">新增联系人</h2>
+                <p>一个联系人可以添加任意多条联系方式</p>
+            </div>
+            <button class="icon-btn" id="modalClose" aria-label="关闭">✕</button>
+        </header>
+
+        <form id="contactForm" novalidate>
+            <div class="form-grid">
+                <label class="field">
+                    <span>姓名 <em>*</em></span>
+                    <input id="fieldName" data-testid="field-name" maxlength="100" placeholder="例如：张三" required>
+                </label>
+                <label class="field">
+                    <span>分组</span>
+                    <input id="fieldGroup" data-testid="field-group" maxlength="50" list="groupOptions"
+                           placeholder="例如：同学 / 同事 / 家人">
+                    <datalist id="groupOptions"></datalist>
+                </label>
+                <label class="field">
+                    <span>公司 / 单位</span>
+                    <input id="fieldCompany" data-testid="field-company" maxlength="100" placeholder="例如：福州大学">
+                </label>
+                <label class="field">
+                    <span>职位</span>
+                    <input id="fieldTitle" data-testid="field-title" maxlength="100" placeholder="例如：本科生">
+                </label>
+            </div>
+
+            <div class="methods-block">
+                <div class="methods-head">
+                    <span class="methods-title">联系方式</span>
+                    <div class="method-chips">
+                        <button type="button" class="chip" data-add="PHONE">＋ 电话</button>
+                        <button type="button" class="chip" data-add="EMAIL">＋ 邮箱</button>
+                        <button type="button" class="chip" data-add="SOCIAL">＋ 社交</button>
+                        <button type="button" class="chip" data-add="ADDRESS">＋ 地址</button>
+                    </div>
+                </div>
+                <div class="method-rows" id="methodRows"></div>
+                <p class="methods-hint is-hidden" id="methodsHint">还没有联系方式，点上面的按钮添加一条。</p>
+            </div>
+
+            <div class="form-grid">
+                <label class="field field-wide">
+                    <span>备注</span>
+                    <input id="fieldNotes" data-testid="field-notes" maxlength="1000" placeholder="例如：同班同学 / 项目搭档">
+                </label>
+                <label class="switch-field">
+                    <input type="checkbox" id="fieldBookmarked" data-testid="field-bookmarked">
+                    <span class="switch"></span>
+                    <span>加入收藏</span>
+                </label>
+            </div>
+
+            <footer class="modal-foot">
+                <button type="button" class="btn btn-ghost" id="cancelBtn">取消</button>
+                <button type="submit" class="btn btn-primary" id="saveBtn" data-testid="save">保存</button>
+            </footer>
+        </form>
+    </div>
+</div>
+
+<!-- delete confirmation -->
+<div class="modal is-hidden" id="confirmModal" role="dialog" aria-modal="true">
+    <div class="modal-card modal-small">
+        <header class="modal-head">
+            <div>
+                <h2>删除联系人</h2>
+                <p id="confirmText">确定要删除这个联系人吗？</p>
+            </div>
+        </header>
+        <footer class="modal-foot">
+            <button type="button" class="btn btn-ghost" id="confirmCancel">取消</button>
+            <button type="button" class="btn btn-danger" id="confirmDelete" data-testid="confirm-delete">删除</button>
+        </footer>
+    </div>
+</div>
+
+<!-- generic message / import result -->
+<div class="modal is-hidden" id="messageModal" role="dialog" aria-modal="true">
+    <div class="modal-card modal-small">
+        <header class="modal-head">
+            <div>
+                <h2 id="messageTitle">提示</h2>
+                <p id="messageText"></p>
+            </div>
+        </header>
+        <div class="message-list" id="messageList"></div>
+        <footer class="modal-foot">
+            <button type="button" class="btn btn-primary" id="messageClose">知道了</button>
+        </footer>
+    </div>
+</div>
+
+<div class="toast is-hidden" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
