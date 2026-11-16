@@ -56,7 +56,7 @@
 
 ## 2. 提交记录与贡献统计
 
-仓库 `main` 分支截至截图时共 12 次提交（1 次初始提交 + 9 次功能提交 + 2 次文档与脚本提交），通过两次 Pull Request 合入，远高于「commit 次数 ≥ 3」的要求。
+仓库 `main` 分支截至截图时共 13 次提交（含 2 次合并提交），通过两次 Pull Request 合入，远高于「commit 次数 ≥ 3」的要求。
 
 ![GitHub 提交历史](docs/screenshots/15-github-commit-history.png)
 
