@@ -207,6 +207,7 @@ async function waitForChrome(port) {
  * @returns {Promise<{devtools: DevTools, chrome: import('child_process').ChildProcess}>}
  */
 async function launch(options) {
+    const extra = options.args || [];
     const chrome = spawn(options.chrome, [
         '--headless=new',
         '--no-sandbox',
@@ -219,6 +220,7 @@ async function launch(options) {
         '--remote-debugging-port=' + options.port,
         '--user-data-dir=' + options.profile,
         '--window-size=' + options.width + ',' + options.height,
+        ...extra,
         'about:blank'
     ], { stdio: 'ignore' });
 
