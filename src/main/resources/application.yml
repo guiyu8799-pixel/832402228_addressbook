@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  compression:
+    enabled: true
+
+spring:
+  application:
+    name: addressbook
+  datasource:
+    url: jdbc:sqlite:${app.database.path}
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    # Hibernate 5.6 has no built-in SQLite dialect; the one shipped by
+    # com.github.gwenn:sqlite-dialect lives in org.sqlite.hibernate.dialect.
+    database-platform: org.sqlite.hibernate.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+app:
+  database:
+    # Relative paths are resolved against the working directory where the jar is started.
+    path: ./data/addressbook.db
+  cors:
+    # Comma separated list of allowed origins; "*" keeps local development simple.
+    allowed-origins: "*"
+
+logging:
+  level:
+    root: INFO
+    com.fzu.addressbook: INFO

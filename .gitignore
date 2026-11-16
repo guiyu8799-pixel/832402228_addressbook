@@ -1,0 +1,29 @@
+# Maven output
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# SQLite runtime data
+data/
+*.db
+*.db-journal
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local temporary files
+*.log
+
+# Screenshot / video working directories
+docs/.chrome-profile/
+docs/video-frames/
+docs/downloads/
+docs/screenshots/_excel.html
