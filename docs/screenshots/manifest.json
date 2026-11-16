@@ -1,0 +1,54 @@
+[
+  {
+    "file": "01-empty-state.png",
+    "label": "空状态：首次打开时通讯录为空，提示「新增联系人」或「下载模板」"
+  },
+  {
+    "file": "02-add-dialog.png",
+    "label": "新增联系人：一个联系人可添加多条联系方式（2 个电话 + 邮箱 + 微信 + 地址）"
+  },
+  {
+    "file": "03-created-contact.png",
+    "label": "保存后列表出现联系人：联系方式按类型展示，数据已写入后端 SQLite"
+  },
+  {
+    "file": "04-bookmarked.png",
+    "label": "收藏联系人：点击星标后卡片高亮，收藏计数变为 1，卡片排到最前面"
+  },
+  {
+    "file": "05-favorites-filter.png",
+    "label": "收藏筛选：侧边栏「收藏」只显示已星标的联系人"
+  },
+  {
+    "file": "06-import-result.png",
+    "label": "Excel 导入：导入 demo-contacts.xlsx 中的 10 位联系人，列表变为 11 位"
+  },
+  {
+    "file": "07-export-toast.png",
+    "label": "Excel 导出：点击「导出 Excel」后后端生成 xlsx 并开始下载"
+  },
+  {
+    "file": "08-search-by-phone.png",
+    "label": "搜索：输入手机号也能命中联系人（关键词会匹配所有联系方式）"
+  },
+  {
+    "file": "09-edit-dialog.png",
+    "label": "编辑联系人：弹窗回填该联系人的全部联系方式，可增删改任意一条"
+  },
+  {
+    "file": "10-delete-confirm.png",
+    "label": "删除联系人：二次确认弹窗，确认后调用 DELETE 接口并刷新列表"
+  },
+  {
+    "file": "11-table-view.png",
+    "label": "表格视图：同一份数据可切换为表格，适合快速浏览和对比"
+  },
+  {
+    "file": "12-persistence-after-reload.png",
+    "label": "刷新页面后数据仍在：联系人来自后端 SQLite，而不是前端缓存"
+  },
+  {
+    "file": "13-mobile-layout.png",
+    "label": "移动端布局：窄屏下侧边栏折叠为横向筛选，卡片单列显示"
+  }
+]
