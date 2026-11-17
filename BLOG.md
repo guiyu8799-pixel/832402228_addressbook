@@ -44,7 +44,7 @@
 | 代码规范 | <https://github.com/guiyu8799-pixel/832402228_addressbook/blob/main/codestyle.md> |
 | 版本发布 | <https://github.com/guiyu8799-pixel/832402228_addressbook/releases/tag/v1.0.0> |
 | Pull Request | <https://github.com/guiyu8799-pixel/832402228_addressbook/pull/1> |
-| 演示视频 | 仓库内 `docs/address-book-demo.mp4` |
+| 演示视频 | <https://github.com/guiyu8799-pixel/832402228_addressbook/blob/main/docs/address-book-demo.mp4> |
 | 云部署地址 | 未做云服务器部署（选做项），本地运行方式见第 7 节 |
 
 **技术栈**：Spring Boot 2.7.18 + Java 8 + Spring Data JPA + SQLite + Apache POI 5.2.5；
@@ -261,7 +261,10 @@ JPA 侧用 `@OneToMany(cascade = ALL, orphanRemoval = true)` 维护关系：更�
 
 ### 4.6 演示视频
 
-完整运行视频见仓库内 [`docs/address-book-demo.mp4`](docs/address-book-demo.mp4)（24 秒，1280×888），按「空状态 → 新增 → 收藏 → 导入 → 导出 → 搜索 → 编辑 → 删除 → 表格 → 刷新 → 移动端」的顺序走完整流程。
+完整运行视频（24 秒，1280×888）按「空状态 → 新增 → 收藏 → 导入 → 导出 → 搜索 → 编辑 → 删除 → 表格 → 刷新 → 移动端」的顺序走完整流程：
+
+- GitHub 在线播放：<https://github.com/guiyu8799-pixel/832402228_addressbook/blob/main/docs/address-book-demo.mp4>
+- 直接下载：<https://github.com/guiyu8799-pixel/832402228_addressbook/raw/main/docs/address-book-demo.mp4>
 
 ---
 

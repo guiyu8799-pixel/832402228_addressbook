@@ -55,8 +55,18 @@
 | 4.5 持久化 | `12-persistence-after-reload.png` | 刷新后仍在 |
 | 4.5 移动端 | `13-mobile-layout.png` | 窄屏布局 |
 
-> 正文里的 `docs/address-book-demo.mp4` 链接指向仓库文件，CSDN 无法直接播放 mp4。
-> 如果要展示视频，可以在 CSDN 编辑器里用「插入视频」上传该文件，或改成 Gitee/GitHub 上的链接说明。
+## 三·五、视频放哪里
+
+视频文件：`docs/address-book-demo.mp4`（1.7MB，24 秒）。三个位置，按截止时间选：
+
+| 方式 | 操作 | 适用 |
+| --- | --- | --- |
+| **A. GitHub 链接（推荐，最稳）** | 正文第 4.6 节已写好绝对链接，CSDN 里直接保留即可；评审点开就是 GitHub 的在线播放页 | 任何情况，30 秒完成 |
+| **B. CSDN 本地上传** | 编辑器工具栏点「视频」→ 上传本地 `docs/address-book-demo.mp4` → 等待转码 | 编辑器里有「视频/上传」入口时 |
+| **C. B 站等外链** | 上传 B 站后，编辑器「视频」按钮粘贴 BV 链接 | 时间充裕时，审核可能要几十分钟 |
+
+> 注意：正文里的 `docs/address-book-demo.mp4` **相对路径在 CSDN 会失效**。
+> 粘贴后检查第 4.6 节，两条链接都必须是 `https://github.com/...` 开头的绝对地址。
 
 ---
 
